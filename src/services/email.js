@@ -3,11 +3,7 @@ const logger = require('../utils/logger');
 
 class EmailService {
   constructor() {
-        if (typeof nodemailer.createTransporter !== 'function') {
-      throw new Error('nodemailer.createTransporter is not available');
-    }
-    this.transporter = nodemailer.createTransporter({
-      host: process.env.SMTP_HOST,
+ this.transporter = nodemailer.createTransport({
       port: parseInt(process.env.SMTP_PORT),
       secure: false,
       auth: {
