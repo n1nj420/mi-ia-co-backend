@@ -3,6 +3,9 @@ const logger = require('../utils/logger');
 
 class EmailService {
   constructor() {
+        if (typeof nodemailer.createTransporter !== 'function') {
+      throw new Error('nodemailer.createTransporter is not available');
+    }
     this.transporter = nodemailer.createTransporter({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT),
@@ -200,4 +203,11 @@ class EmailService {
   }
 }
 
-module.exports = new EmailService();
+let emailServiceInstance = null;
+try {
+  emailServiceInstance = new EmailService();
+} catch (error) {
+  console.error('Failed to initialize EmailService:', error.message);
+  emailServiceInstance = null;
+}
+module.exports = emailServiceInstance;
