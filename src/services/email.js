@@ -4,6 +4,7 @@ const logger = require('../utils/logger');
 class EmailService {
   constructor() {
  this.transporter = nodemailer.createTransport({
+         host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT),
       secure: false,
       auth: {
